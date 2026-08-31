@@ -73,7 +73,7 @@ export default function Sidebar({
             <Tag className="w-3 h-3" />
             Tags
           </div>
-          <div className="space-y-1 max-h-44 overflow-y-auto custom-scrollbar pr-1">
+          <div className="space-y-1 max-h-44 overflow-y-auto overscroll-contain custom-scrollbar pr-1" data-lenis-prevent="true">
             <button
               onClick={() => setFilterTag(null)}
               className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium transition flex items-center justify-between ${

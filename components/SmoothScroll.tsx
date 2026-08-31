@@ -1,17 +1,25 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
 export default function SmoothScroll() {
+  const pathname = usePathname();
+
   useEffect(() => {
+    // Disable Lenis smooth scroll on the web app (/app) to allow 100% native touchpad & wheel scrolling
+    if (!pathname || pathname.startsWith("/app")) {
+      return;
+    }
+
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
 
-    // High-performance snappy Lenis configuration
+    // High-performance snappy Lenis configuration for landing page
     const lenis = new Lenis({
-      lerp: 0.14, // Snappy & responsive (tanpa rasa berat / drag lambat)
+      lerp: 0.14,
       wheelMultiplier: 1.15,
       touchMultiplier: 1.0,
       smoothWheel: true,
@@ -30,7 +38,7 @@ export default function SmoothScroll() {
       cancelAnimationFrame(animationFrameId);
       lenis.destroy();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
