@@ -477,7 +477,7 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
       />
 
       {/* Main Workspace Layout */}
-      <div className="max-w-[1400px] w-full mx-auto flex-1 flex overflow-hidden px-6 py-6 gap-6">
+      <div className="max-w-[1400px] w-full mx-auto flex-1 flex px-6 py-6 gap-6 min-h-0">
         {/* Left Sidebar */}
         <Sidebar
           tasks={tasks}
