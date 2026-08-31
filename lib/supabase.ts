@@ -8,6 +8,23 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const LOCAL_STORAGE_KEY = "sisy_tasks_v1";
 
+/**
+ * Returns or generates a persistent private workspace User ID per browser session/device.
+ */
+export function getOrCreateUserId(): string {
+  if (typeof window === "undefined") return "default_user";
+  try {
+    let userId = localStorage.getItem("sisy_user_id");
+    if (!userId) {
+      userId = "usr_" + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
+      localStorage.setItem("sisy_user_id", userId);
+    }
+    return userId;
+  } catch {
+    return "default_user";
+  }
+}
+
 export function getLocalCachedTasks(): Task[] {
   if (typeof window === "undefined") return [];
   try {
@@ -29,9 +46,11 @@ export function saveLocalCachedTasks(tasks: Task[]): void {
 
 export async function fetchTasks(): Promise<Task[]> {
   try {
+    const userId = getOrCreateUserId();
     const { data, error } = await supabase
       .from("tasks")
       .select("*")
+      .eq("user_id", userId)
       .order("priority", { ascending: false })
       .order("id", { ascending: true });
 
@@ -48,10 +67,11 @@ export async function fetchTasks(): Promise<Task[]> {
 }
 
 export async function createTask(task: Partial<Task>): Promise<Task> {
-  // Optimistic fallback ID
+  const userId = getOrCreateUserId();
   const tempId = Date.now();
   const optimisticTask: Task = {
     id: tempId,
+    user_id: userId,
     name: task.name || "Untitled Task",
     status: task.status || "TODO",
     priority: task.priority || 3,
@@ -72,12 +92,12 @@ export async function createTask(task: Partial<Task>): Promise<Task> {
   try {
     const { data, error } = await supabase
       .from("tasks")
-      .insert([task])
+      .insert([{ ...task, user_id: userId }])
       .select()
       .single();
 
     if (error) throw error;
-    return data;
+    return data || optimisticTask;
   } catch (err) {
     console.warn("Supabase insert error, saved locally:", err);
     const cached = getLocalCachedTasks();
@@ -105,7 +125,7 @@ export async function updateTask(id: number, updates: Partial<Task>): Promise<Ta
       .single();
 
     if (error) throw error;
-    return data;
+    return data || updatedObj;
   } catch (err) {
     console.warn("Supabase update error, preserved locally:", err);
     return updatedObj;

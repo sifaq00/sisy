@@ -25,6 +25,7 @@ import {
   deleteTask,
   getLocalCachedTasks,
   saveLocalCachedTasks,
+  getOrCreateUserId,
 } from "@/lib/supabase";
 import { Task, TaskStatus } from "@/lib/types";
 import { optimizeSchedule } from "@/lib/scheduler";
@@ -157,11 +158,12 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
     }
 
     // Realtime Supabase Subscription
+    const userId = getOrCreateUserId();
     const channel = supabase
-      .channel("realtime-tasks")
+      .channel(`realtime-tasks-${userId}`)
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "tasks" },
+        { event: "*", schema: "public", table: "tasks", filter: `user_id=eq.${userId}` },
         (payload) => {
           if (payload.eventType === "INSERT") {
             setTasks((prev) => {

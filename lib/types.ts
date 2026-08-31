@@ -2,6 +2,7 @@ export type TaskStatus = "TODO" | "IN_PROGRESS" | "COMPLETED" | "CANCELED";
 
 export interface Task {
   id: number;
+  user_id?: string;
   name: string;
   status: TaskStatus;
   priority: number;
