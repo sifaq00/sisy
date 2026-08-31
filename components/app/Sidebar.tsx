@@ -24,7 +24,7 @@ export default function Sidebar({
   allTags,
 }: SidebarProps) {
   return (
-    <aside className="w-64 bg-[#FFFDF7] border border-[#E2D9C6] rounded-2xl p-4 hidden md:flex flex-col shrink-0 shadow-sm max-h-[calc(100vh-200px)] overflow-y-auto custom-scrollbar sticky top-6">
+    <aside className="w-64 bg-[#FFFDF7] border border-[#E2D9C6] rounded-2xl p-4 hidden md:flex flex-col shrink-0 shadow-sm h-full overflow-y-auto custom-scrollbar">
       <div className="space-y-6 flex-1">
         <div>
           <div className="text-[10px] font-mono text-[#8C867A] tracking-wider uppercase mb-2.5 flex items-center gap-1.5 font-semibold">
