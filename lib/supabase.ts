@@ -29,7 +29,21 @@ export function getLocalCachedTasks(): Task[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
+    if (!raw) return [];
+    const tasks: Task[] = JSON.parse(raw);
+    const now = Date.now();
+    const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+    const THREE_DAYS = 3 * 24 * 60 * 60 * 1000;
+    const valid = tasks.filter((t) => {
+      const createdTime = t.created_at ? new Date(t.created_at).getTime() : now;
+      if (now - createdTime > SEVEN_DAYS) return false;
+      if (t.status === "COMPLETED") {
+        const updateTime = t.updated_at ? new Date(t.updated_at).getTime() : createdTime;
+        if (now - updateTime > THREE_DAYS) return false;
+      }
+      return true;
+    });
+    return valid;
   } catch {
     return [];
   }
