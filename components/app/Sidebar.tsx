@@ -24,7 +24,7 @@ export default function Sidebar({
   allTags,
 }: SidebarProps) {
   return (
-    <aside className="w-64 bg-[#FFFDF7] border border-[#E2D9C6] rounded-2xl p-4 hidden md:flex flex-col shrink-0 shadow-sm sticky top-6 self-start max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar">
+    <aside className="w-64 bg-[#FFFDF7] border border-[#E2D9C6] rounded-2xl p-4 hidden md:flex flex-col shrink-0 shadow-sm sticky top-6 self-start">
       <div className="space-y-6 flex-1">
         <div>
           <div className="text-[10px] font-mono text-[#8C867A] tracking-wider uppercase mb-2.5 flex items-center gap-1.5 font-semibold">
@@ -73,7 +73,7 @@ export default function Sidebar({
             <Tag className="w-3 h-3" />
             Tags
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1 max-h-44 overflow-y-auto custom-scrollbar pr-1">
             <button
               onClick={() => setFilterTag(null)}
               className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-medium transition flex items-center justify-between ${
