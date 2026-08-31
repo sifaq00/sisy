@@ -440,7 +440,7 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
   }, [currentDate]);
 
   return (
-    <div className="h-screen bg-[#F5F0E4] text-[#211F1A] flex flex-col font-sans selection:bg-[#C9662A]/20 overflow-hidden">
+    <div className="min-h-screen bg-[#F5F0E4] text-[#211F1A] flex flex-col font-sans selection:bg-[#C9662A]/20 pb-12">
       {/* Toast Notification */}
       <AnimatePresence>
         {toastMessage && (
@@ -477,7 +477,7 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
       />
 
       {/* Main Workspace Layout */}
-      <div className="max-w-[1400px] w-full mx-auto flex-1 flex px-6 pb-6 gap-6 min-h-0 overflow-hidden">
+      <div className="max-w-[1400px] w-full mx-auto flex px-6 py-6 gap-6 items-start">
         {/* Left Sidebar */}
         <Sidebar
           tasks={tasks}
@@ -490,7 +490,7 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
         />
 
         {/* Center Workspace */}
-        <main className="flex-1 flex flex-col gap-6 overflow-y-auto min-w-0 h-full pr-1 custom-scrollbar">
+        <main className="flex-1 flex flex-col gap-6 min-w-0">
           {/* Top Section: ScheduleStrip & Optimizer */}
           <ScheduleStrip
             todayFormatted={todayFormatted}
