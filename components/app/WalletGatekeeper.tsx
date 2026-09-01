@@ -10,7 +10,7 @@ export default function WalletGatekeeper() {
 
   return (
     <div className="min-h-screen bg-[#F5F0E4] text-[#211F1A] flex flex-col font-sans selection:bg-[#C9662A]/20">
-      <Navbar />
+      <Navbar minimal />
 
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <motion.div
