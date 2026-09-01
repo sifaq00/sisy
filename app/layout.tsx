@@ -33,7 +33,12 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   icons: {
-    icon: "/icon.svg",
+    icon: [
+      { url: "/logo.png" },
+      { url: "/favicon.ico" },
+    ],
+    apple: "/apple-icon.png",
+    shortcut: "/logo.png",
   },
 };
 
