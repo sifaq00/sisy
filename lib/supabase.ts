@@ -29,10 +29,16 @@ export function getOrCreateUserId(): string {
   }
 }
 
-export function getLocalCachedTasks(): Task[] {
+export function getLocalCachedTasks(targetUserId?: string): Task[] {
   if (typeof window === "undefined") return [];
   try {
-    const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const userId = targetUserId || getOrCreateUserId();
+    const key = `sisy_tasks_${userId}`;
+    let raw = localStorage.getItem(key);
+    if (!raw) {
+      // Fallback to legacy generic key
+      raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+    }
     if (!raw) return [];
     const tasks: Task[] = JSON.parse(raw);
     const now = Date.now();
@@ -53,9 +59,12 @@ export function getLocalCachedTasks(): Task[] {
   }
 }
 
-export function saveLocalCachedTasks(tasks: Task[]): void {
+export function saveLocalCachedTasks(tasks: Task[], targetUserId?: string): void {
   if (typeof window === "undefined") return;
   try {
+    const userId = targetUserId || getOrCreateUserId();
+    const key = `sisy_tasks_${userId}`;
+    localStorage.setItem(key, JSON.stringify(tasks));
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tasks));
   } catch (e) {
     console.error("Local cache save error:", e);
