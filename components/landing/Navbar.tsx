@@ -21,6 +21,7 @@ export default function Navbar({ scrolled, minimal = false }: NavbarProps) {
           {!minimal ? (
             <div className="s-nav-links">
               <a href="#optimizer">Optimizer</a>
+              <a href="#demo">Demo</a>
               <a href="#tracking">Tracking</a>
               <a href="#open">Architecture</a>
             </div>

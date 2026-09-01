@@ -154,7 +154,7 @@ export default function NewTaskModal({
                     <option value="">None (Independent)</option>
                     {tasks.map((t) => (
                       <option key={t.id} value={t.id}>
-                        SY-{t.id}: {t.name.slice(0, 20)}
+                        SY-{String(t.id).padStart(4, "0")}: {t.name.slice(0, 28)}
                       </option>
                     ))}
                   </select>

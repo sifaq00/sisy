@@ -173,8 +173,8 @@ export default function CommandPalette({
             </div>
 
             <div className="bg-[#EFE8D8]/50 px-4 py-2 border-t border-[#E2D9C6] text-[10px] font-mono text-[#8C867A] flex justify-between items-center">
-              <span>sisy 1.0.0 · connected</span>
-              <span className="text-[#5A684B]">api-key ok</span>
+              <span>sisy v2.0 · Solana Web3</span>
+              <span className="text-[#5A684B]">RLS Encrypted</span>
             </div>
           </motion.div>
         </motion.div>

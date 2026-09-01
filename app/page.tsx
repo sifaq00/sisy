@@ -7,6 +7,7 @@ import Marquee from "@/components/landing/Marquee";
 import FeatureOptimizer from "@/components/landing/FeatureOptimizer";
 import FeatureTracking from "@/components/landing/FeatureTracking";
 import FeatureHeritage from "@/components/landing/FeatureHeritage";
+import LiveAppDemo from "@/components/landing/LiveAppDemo";
 import ArchitectureTerminal from "@/components/landing/ArchitectureTerminal";
 import NightCTA from "@/components/landing/NightCTA";
 import Footer from "@/components/landing/Footer";
@@ -72,6 +73,9 @@ export default function SisyLanding() {
         <FeatureTracking />
         <FeatureHeritage />
       </section>
+
+      {/* Live Interactive App Demo Sandbox */}
+      <LiveAppDemo />
 
       {/* Architecture Typed Terminal */}
       <ArchitectureTerminal />
