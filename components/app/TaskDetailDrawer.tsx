@@ -181,15 +181,54 @@ export default function TaskDetailDrawer({
               </div>
             </div>
 
-            {/* Depends On Task (Prerequisite) Selector */}
+            {/* Depends On Task (Prerequisite) Selector with Cycle Prevention */}
             <div className="border-t border-[#E2D9C6] pt-3 text-xs">
-              <span className="text-[10px] font-mono text-[#8C867A] uppercase block mb-1">
-                Depends On Task (Prerequisite)
-              </span>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[10px] font-mono text-[#8C867A] uppercase block">
+                  Depends On Task (Prerequisite)
+                </span>
+                {selectedTask.depends_on && selectedTask.depends_on.length > 0 && (
+                  <span className="text-[9px] font-mono text-[#5A684B]">DAG Linked</span>
+                )}
+              </div>
               <select
                 value={selectedTask.depends_on?.[0] || ""}
                 onChange={(e) => {
-                  const val = e.target.value ? [Number(e.target.value)] : [];
+                  const targetDepId = e.target.value ? Number(e.target.value) : null;
+                  if (!targetDepId) {
+                    setTasks((prev) =>
+                      prev.map((t) => (t.id === selectedTask.id ? { ...t, depends_on: [] } : t))
+                    );
+                    updateTask(selectedTask.id, { depends_on: [] });
+                    return;
+                  }
+
+                  // Circular Dependency Check: Does targetDepId already depend on selectedTask.id?
+                  const checkCausesCycle = (startId: number, lookForId: number): boolean => {
+                    const visited = new Set<number>();
+                    const queue = [startId];
+                    while (queue.length > 0) {
+                      const curr = queue.shift()!;
+                      if (curr === lookForId) return true;
+                      if (!visited.has(curr)) {
+                        visited.add(curr);
+                        const tObj = tasks.find((t) => t.id === curr);
+                        if (tObj && tObj.depends_on) {
+                          queue.push(...tObj.depends_on);
+                        }
+                      }
+                    }
+                    return false;
+                  };
+
+                  if (checkCausesCycle(targetDepId, selectedTask.id)) {
+                    alert(
+                      `⚠️ Circular Dependency Prevented:\n\nTask SY-${String(targetDepId).padStart(4, "0")} already depends on this task (directly or indirectly). Choosing this would create an infinite scheduling loop.`
+                    );
+                    return;
+                  }
+
+                  const val = [targetDepId];
                   setTasks((prev) =>
                     prev.map((t) => (t.id === selectedTask.id ? { ...t, depends_on: val } : t))
                   );

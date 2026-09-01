@@ -14,6 +14,10 @@ const LOCAL_STORAGE_KEY = "sisy_tasks_v1";
 export function getOrCreateUserId(): string {
   if (typeof window === "undefined") return "default_user";
   try {
+    const wallet = localStorage.getItem("sisy_wallet_address");
+    if (wallet && wallet.trim().length > 6) {
+      return wallet.trim();
+    }
     let userId = localStorage.getItem("sisy_user_id");
     if (!userId) {
       userId = "usr_" + Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
