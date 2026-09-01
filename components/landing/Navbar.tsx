@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import WalletButton from "@/components/app/WalletButton";
 import { useWallet } from "@/context/WalletContext";
 
@@ -16,7 +17,7 @@ export default function Navbar({ scrolled, minimal = false }: NavbarProps) {
     <nav className={`s-nav ${scrolled ? "s-nav-scrolled" : ""}`}>
       <div className="s-nav-container">
         <div className="s-nav-inner">
-          {/* Left Navigation Links - Hidden when minimal */}
+          {/* Left Navigation Links or Back Button */}
           {!minimal ? (
             <div className="s-nav-links">
               <a href="#optimizer">Optimizer</a>
@@ -24,7 +25,15 @@ export default function Navbar({ scrolled, minimal = false }: NavbarProps) {
               <a href="#open">Architecture</a>
             </div>
           ) : (
-            <div className="hidden sm:block" />
+            <div className="flex items-center">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs text-[#57534A] hover:text-[#211F1A] font-medium bg-[#EFE8D8]/60 hover:bg-[#E9E1CF] px-3 py-1.5 rounded-full border border-[#E2D9C6]/60 transition-all hover:scale-[1.02] cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 text-[#C9662A]" />
+                <span>Back to Home</span>
+              </Link>
+            </div>
           )}
 
           {/* Logo */}

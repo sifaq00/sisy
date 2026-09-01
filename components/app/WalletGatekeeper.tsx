@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Wallet, ShieldCheck, Sparkles, Lock, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Wallet, ShieldCheck, Sparkles, Lock, ArrowRight, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { useWallet } from "@/context/WalletContext";
 import Navbar from "@/components/landing/Navbar";
 
@@ -61,6 +62,15 @@ export default function WalletGatekeeper() {
             <span className="group-hover:text-white">Connect Wallet to Access App</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform" />
           </motion.button>
+
+          {/* Back to Landing Link */}
+          <Link
+            href="/"
+            className="w-full mt-2.5 text-center text-xs font-medium text-[#57534A] hover:text-[#211F1A] hover:bg-[#EFE8D8]/60 py-2.5 rounded-2xl border border-[#E2D9C6]/50 hover:border-[#E2D9C6] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 text-[#8C867A]" />
+            <span>Return to Landing Page</span>
+          </Link>
 
           {/* Footer Security Note */}
           <div className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-[#8C867A]">
