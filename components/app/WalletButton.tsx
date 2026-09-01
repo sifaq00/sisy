@@ -53,21 +53,33 @@ export default function WalletButton() {
   return (
     <div className="relative shrink-0 font-sans" ref={dropdownRef}>
       {!connected ? (
-        <button
+        <motion.button
+          whileHover={{ scale: 1.03, y: -1 }}
+          whileTap={{ scale: 0.97 }}
           onClick={() => setIsModalOpen(true)}
-          className="s-pill bg-[#211F1A] text-[#F5F0E4] hover:bg-[#C9662A] px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all"
+          className="relative group overflow-hidden bg-[#211F1A] text-[#F5F0E4] px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2 shadow-sm hover:shadow-[0_6px_20px_rgba(201,102,42,0.22)] transition-all duration-200 border border-[#211F1A] hover:border-[#C9662A] cursor-pointer"
         >
-          <Wallet className="w-3.5 h-3.5 text-[#C9662A]" />
-          <span>Connect Wallet</span>
-        </button>
+          <div className="w-4 h-4 rounded-full bg-[#C9662A]/20 flex items-center justify-center text-[#C9662A] group-hover:bg-[#C9662A] group-hover:text-white transition-colors duration-200">
+            <Wallet className="w-2.5 h-2.5" />
+          </div>
+          <span className="tracking-normal group-hover:text-[#FFFDF7] transition-colors">
+            Connect Wallet
+          </span>
+          <span className="text-[#C9662A] group-hover:translate-x-0.5 transition-transform duration-200">
+            →
+          </span>
+        </motion.button>
       ) : (
-        <button
+        <motion.button
+          whileHover={{ scale: 1.02, y: -1 }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => {
             setMenuOpen((prev) => !prev);
             if (!menuOpen) fetchBalance(address);
           }}
-          className="flex items-center gap-2 bg-[#FFFDF7] border border-[#E2D9C6] hover:border-[#C9662A] py-1.5 px-3 rounded-xl text-xs font-medium text-[#211F1A] shadow-xs transition"
+          className="flex items-center gap-2 bg-[#FFFDF7] border border-[#E2D9C6] hover:border-[#C9662A] hover:bg-[#EFE8D8]/50 py-1.5 px-3 rounded-full text-xs font-medium text-[#211F1A] shadow-2xs hover:shadow-sm transition-all duration-200 cursor-pointer"
         >
+          <span className="w-2 h-2 rounded-full bg-[#5A684B] animate-pulse" />
           <img
             src={walletIcon}
             alt={walletName}
@@ -80,11 +92,11 @@ export default function WalletButton() {
           <span className="font-mono text-xs font-bold text-[#211F1A]">{shortAddress}</span>
 
           <ChevronDown
-            className={`w-3 h-3 text-[#8C867A] transition-transform ${
-              menuOpen ? "rotate-180" : ""
+            className={`w-3 h-3 text-[#8C867A] transition-transform duration-200 ${
+              menuOpen ? "rotate-180 text-[#C9662A]" : ""
             }`}
           />
-        </button>
+        </motion.button>
       )}
 
       {/* Account Popover */}
@@ -136,7 +148,7 @@ export default function WalletButton() {
                   }}
                   disabled={isRefreshing}
                   title="Refresh Balance"
-                  className="hover:text-[#211F1A]"
+                  className="hover:text-[#211F1A] transition"
                 >
                   <RefreshCw className={`w-3 h-3 ${isRefreshing ? "animate-spin text-[#C9662A]" : ""}`} />
                 </button>
@@ -150,7 +162,7 @@ export default function WalletButton() {
             <div className="space-y-1 text-xs">
               <button
                 onClick={handleCopy}
-                className="flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 hover:bg-[#E9E1CF] text-[#57534A] hover:text-[#211F1A] transition"
+                className="flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 hover:bg-[#E9E1CF] text-[#57534A] hover:text-[#211F1A] transition cursor-pointer"
               >
                 <span className="flex items-center gap-2">
                   <Copy className="w-3.5 h-3.5 text-[#C9662A]" />
@@ -163,7 +175,7 @@ export default function WalletButton() {
                 href={explorerUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 hover:bg-[#E9E1CF] text-[#57534A] hover:text-[#211F1A] transition"
+                className="flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 hover:bg-[#E9E1CF] text-[#57534A] hover:text-[#211F1A] transition cursor-pointer"
               >
                 <span className="flex items-center gap-2">
                   <ExternalLink className="w-3.5 h-3.5 text-[#C9662A]" />
@@ -176,7 +188,7 @@ export default function WalletButton() {
                   disconnectWallet();
                   setMenuOpen(false);
                 }}
-                className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-[#B83A2E] hover:bg-[#B83A2E]/10 transition"
+                className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-[#B83A2E] hover:bg-[#B83A2E]/10 transition cursor-pointer"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 <span>Disconnect</span>

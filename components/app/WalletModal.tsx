@@ -231,14 +231,16 @@ export default function WalletModal() {
             const isConnecting = connectingId === wallet.id;
 
             return (
-              <button
+              <motion.button
                 key={wallet.id}
+                whileHover={{ scale: 1.015, x: 2 }}
+                whileTap={{ scale: 0.985 }}
                 onClick={() => handleSelectWallet(wallet)}
                 disabled={isConnecting}
-                className="group flex w-full items-center justify-between rounded-xl border border-[#E2D9C6]/80 bg-[#EFE8D8]/40 hover:bg-[#E9E1CF] hover:border-[#C9662A]/50 p-2.5 px-3 transition-all text-left"
+                className="group flex w-full items-center justify-between rounded-xl border border-[#E2D9C6]/80 bg-[#EFE8D8]/40 hover:bg-[#EFE8D8] hover:border-[#C9662A] p-2.5 px-3 transition-all duration-150 text-left shadow-2xs hover:shadow-xs cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 shrink-0 flex items-center justify-center rounded-lg bg-white border border-[#E2D9C6] p-1.5 group-hover:border-[#C9662A] transition-colors">
+                  <div className="w-8 h-8 shrink-0 flex items-center justify-center rounded-lg bg-white border border-[#E2D9C6] p-1.5 group-hover:border-[#C9662A] group-hover:shadow-2xs transition-all">
                     <img
                       src={wallet.icon}
                       alt={wallet.name}
@@ -257,7 +259,7 @@ export default function WalletModal() {
                         {wallet.chain}
                       </span>
                     </div>
-                    <p className="text-[10px] text-[#8C867A]">
+                    <p className="text-[10px] text-[#8C867A] group-hover:text-[#57534A] transition-colors">
                       {isInstalled ? "Detected & Ready" : "Click to connect"}
                     </p>
                   </div>
@@ -272,12 +274,12 @@ export default function WalletModal() {
                       <span>Installed</span>
                     </span>
                   ) : (
-                    <span className="font-mono text-[10px] text-[#8C867A] group-hover:text-[#C9662A]">
+                    <span className="font-mono text-[10px] text-[#8C867A] group-hover:text-[#C9662A] group-hover:translate-x-0.5 transition-all inline-block">
                       Connect →
                     </span>
                   )}
                 </div>
-              </button>
+              </motion.button>
             );
           })}
         </div>

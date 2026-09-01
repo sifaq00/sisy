@@ -51,14 +51,16 @@ export default function WalletGatekeeper() {
           </div>
 
           {/* Action Button */}
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02, y: -1 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => setIsModalOpen(true)}
-            className="w-full s-pill bg-[#211F1A] text-[#F5F0E4] hover:bg-[#C9662A] py-3 px-5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
+            className="w-full group bg-[#211F1A] text-[#F5F0E4] hover:bg-[#C9662A] py-3.5 px-5 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-[0_8px_24px_rgba(201,102,42,0.25)] transition-all duration-200 cursor-pointer border border-[#211F1A] hover:border-[#C9662A]"
           >
-            <Wallet className="w-4 h-4 text-[#C9662A]" />
-            <span>Connect Wallet to Access App</span>
-            <ArrowRight className="w-3.5 h-3.5 ml-1" />
-          </button>
+            <Wallet className="w-4 h-4 text-[#C9662A] group-hover:text-white transition-colors" />
+            <span className="group-hover:text-white">Connect Wallet to Access App</span>
+            <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform" />
+          </motion.button>
 
           {/* Footer Security Note */}
           <div className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-[#8C867A]">
