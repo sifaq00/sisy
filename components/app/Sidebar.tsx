@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { SlidersHorizontal, Tag, Flame, Circle, Command } from "lucide-react";
 import { Task } from "@/lib/types";
 import { useWallet } from "@/context/WalletContext";
+import { exportWorkspaceJSON, exportWorkspaceCSV, purgeAccountWorkspace } from "@/lib/export";
 
 interface SidebarProps {
   tasks: Task[];
@@ -24,7 +25,7 @@ export default function Sidebar({
   setFilterTag,
   allTags,
 }: SidebarProps) {
-  const { connected, address, shortAddress, walletName, walletIcon } = useWallet();
+  const { connected, address, shortAddress, walletName, walletIcon, disconnectWallet } = useWallet();
 
   return (
     <aside className="w-64 bg-[#FFFDF7] border border-[#E2D9C6] rounded-2xl p-4 hidden md:flex flex-col shrink-0 shadow-sm sticky top-6 self-start">
@@ -141,10 +142,45 @@ export default function Sidebar({
             </div>
           </div>
         </div>
+
+        {/* Workspace Data Management */}
+        <div className="pt-2 border-t border-[#E2D9C6]/60">
+          <div className="text-[10px] font-mono text-[#8C867A] tracking-wider uppercase mb-2 font-semibold">
+            Data & Privacy
+          </div>
+          <div className="space-y-1 text-xs">
+            <button
+              onClick={() => exportWorkspaceJSON(tasks, address)}
+              className="w-full text-left px-2.5 py-1.5 rounded-lg text-[#57534A] hover:text-[#211F1A] hover:bg-[#E9E1CF] transition flex items-center justify-between"
+            >
+              <span>Export JSON</span>
+              <span className="text-[9px] font-mono text-[#8C867A]">.json</span>
+            </button>
+            <button
+              onClick={() => exportWorkspaceCSV(tasks, address)}
+              className="w-full text-left px-2.5 py-1.5 rounded-lg text-[#57534A] hover:text-[#211F1A] hover:bg-[#E9E1CF] transition flex items-center justify-between"
+            >
+              <span>Export CSV</span>
+              <span className="text-[9px] font-mono text-[#8C867A]">.csv</span>
+            </button>
+            <button
+              onClick={() =>
+                purgeAccountWorkspace(address, () => {
+                  disconnectWallet();
+                  window.location.reload();
+                })
+              }
+              className="w-full text-left px-2.5 py-1.5 rounded-lg text-[#B83A2E] hover:bg-[#B83A2E]/10 transition flex items-center justify-between"
+            >
+              <span>Purge Workspace</span>
+              <span className="text-[9px] font-mono text-[#B83A2E]">Reset</span>
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Bottom Footer */}
-      <div className="border-t border-[#E2D9C6] pt-3 mt-6 space-y-2 text-[11px] font-mono text-[#8C867A]">
+      <div className="border-t border-[#E2D9C6] pt-3 mt-4 space-y-1.5 text-[11px] font-mono text-[#8C867A]">
         <div className="flex items-center justify-between">
           <span className="flex items-center gap-1">
             <Command className="w-3 h-3" /> Shortcuts
@@ -152,8 +188,8 @@ export default function Sidebar({
           <span className="text-[10px] bg-[#E9E1CF] px-1.5 py-0.5 rounded text-[#57534A]">⌘K</span>
         </div>
         <div className="flex justify-between items-center text-[10px]">
-          <span>sisy v1.0</span>
-          <span className="text-[#5A684B]">Cloud Synced</span>
+          <span>sisy v2.0 (Solana)</span>
+          <span className="text-[#5A684B]">Encrypted RLS</span>
         </div>
       </div>
     </aside>

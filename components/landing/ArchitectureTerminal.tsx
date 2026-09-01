@@ -7,12 +7,13 @@ function TypedTerminal() {
   const [ref, inView] = useInView(0.3);
   const [n, setN] = useState(0);
   const lines = [
-    ["$ sisy --version", "#8FA07E"],
-    ["sisy 1.0.0 · MIT licensed · single-user web client", "#C7BFAF"],
-    ["$ sisy status", "#8FA07E"],
-    ["9 scheduling algorithms · Cloud real-time sync", "#C7BFAF"],
-    ["1 single dashboard — task table, gantt, time tracker", "#C7BFAF"],
-    ["All tasks persistent in cloud with zero server management.", "#C7BFAF"],
+    ["$ sisy auth --status", "#8FA07E"],
+    ["Connected wallet: 8vB7...8aZ · Solana Web3 auth", "#C7BFAF"],
+    ["$ sisy sync --check", "#8FA07E"],
+    ["Realtime WebSocket: Connected (mobile & desktop in sync)", "#C7BFAF"],
+    ["$ sisy optimize --algo dag", "#8FA07E"],
+    ["DAG critical path resolved · 0ms local preview", "#C7BFAF"],
+    ["Row Level Security: 100% database-isolated per wallet.", "#C7BFAF"],
   ];
 
   useEffect(() => {
@@ -51,7 +52,7 @@ function TypedTerminal() {
           <i style={{ background: "#27C93F", width: 10, height: 10 }} />
         </div>
         <span className="text-[10px] font-mono text-[#8C867A] tracking-wider">
-          zsh — sisy@cloud-engine ~ (fastapi)
+          sisy@realtime-cloud ~ (solana-web3)
         </span>
         <span className="text-[9px] font-mono text-[#8FA07E] font-medium">● 200 OK</span>
       </div>
@@ -77,7 +78,7 @@ export default function ArchitectureTerminal() {
           ARCHITECTURE
         </div>
         <h2 className="s-h2" style={{ textAlign: "center" }}>
-          Modern Realtime Cloud Engine
+          Web3 Wallet & Realtime Cloud Engine
         </h2>
       </Reveal>
       <Reveal delay={140}>

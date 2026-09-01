@@ -8,8 +8,8 @@ export default function Footer() {
           <span className="s-logo" style={{ fontSize: 16 }}>
             sisy<span className="s-logo-dot">●</span>
           </span>
-          <span className="text-xs text-[#57534A]">Single-user Task System</span>
-          <span className="text-xs text-[#8C867A]">© 2026 sisy — built for peak productivity</span>
+          <span className="text-xs text-[#57534A]">Open Task & Schedule Optimizer for Everyone</span>
+          <span className="text-xs text-[#8C867A]">© 2026 sisy — crafted for focused work & clarity</span>
         </div>
       </div>
     </footer>

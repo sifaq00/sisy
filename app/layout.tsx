@@ -5,6 +5,7 @@ import { WalletProvider } from "@/context/WalletContext";
 import WalletModal from "@/components/app/WalletModal";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sisy.app"),
   title: "sisy — The endless mountain of work, organized.",
   description:
     "A modern task & schedule optimizer with Solana Web3 wallet login, DAG dependency resolution, and realtime multi-device sync.",
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
     siteName: "Sisy",
     images: [
       {
-        url: "/icon.svg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Sisy Task & Schedule Optimizer",
@@ -29,6 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "sisy — The endless mountain of work, organized.",
     description: "Personal task & schedule optimizer with Solana wallet login and realtime sync.",
+    images: ["/og-image.png"],
   },
   icons: {
     icon: "/icon.svg",
