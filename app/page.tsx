@@ -1,16 +1,30 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import Marquee from "@/components/landing/Marquee";
 import FeatureOptimizer from "@/components/landing/FeatureOptimizer";
 import FeatureTracking from "@/components/landing/FeatureTracking";
 import FeatureHeritage from "@/components/landing/FeatureHeritage";
-import LiveAppDemo from "@/components/landing/LiveAppDemo";
-import ArchitectureTerminal from "@/components/landing/ArchitectureTerminal";
-import NightCTA from "@/components/landing/NightCTA";
 import Footer from "@/components/landing/Footer";
+
+// Dynamically load below-the-fold components for ultra-light initial paint
+const LiveAppDemo = dynamic(() => import("@/components/landing/LiveAppDemo"), {
+  ssr: true,
+  loading: () => <div className="min-h-[400px]" />,
+});
+
+const ArchitectureTerminal = dynamic(() => import("@/components/landing/ArchitectureTerminal"), {
+  ssr: true,
+  loading: () => <div className="min-h-[300px]" />,
+});
+
+const NightCTA = dynamic(() => import("@/components/landing/NightCTA"), {
+  ssr: true,
+  loading: () => <div className="min-h-[250px]" />,
+});
 
 export default function SisyLanding() {
   const [scrolled, setScrolled] = useState(false);
@@ -42,7 +56,7 @@ export default function SisyLanding() {
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    const timer = setTimeout(() => setLoaded(true), 50);
+    const timer = setTimeout(() => setLoaded(true), 30);
 
     return () => {
       window.removeEventListener("scroll", onScroll);

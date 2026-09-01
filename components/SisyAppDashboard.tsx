@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import { RotateCw, Sparkles } from "lucide-react";
 
@@ -10,14 +11,16 @@ import MetricCards from "./app/MetricCards";
 import Sidebar from "./app/Sidebar";
 import ScheduleStrip from "./app/ScheduleStrip";
 import TaskTable from "./app/TaskTable";
-import GanttView from "./app/GanttView";
-import TimeTrackerView from "./app/TimeTrackerView";
-import TaskDetailDrawer from "./app/TaskDetailDrawer";
-import NewTaskModal from "./app/NewTaskModal";
-import CommandPalette from "./app/CommandPalette";
-import AuditLogModal, { AuditItem } from "./app/AuditLogModal";
 import WalletGatekeeper from "./app/WalletGatekeeper";
 import { useWallet } from "@/context/WalletContext";
+import type { AuditItem } from "./app/AuditLogModal";
+
+const GanttView = dynamic(() => import("./app/GanttView"), { ssr: false });
+const TimeTrackerView = dynamic(() => import("./app/TimeTrackerView"), { ssr: false });
+const TaskDetailDrawer = dynamic(() => import("./app/TaskDetailDrawer"), { ssr: false });
+const NewTaskModal = dynamic(() => import("./app/NewTaskModal"), { ssr: false });
+const CommandPalette = dynamic(() => import("./app/CommandPalette"), { ssr: false });
+const AuditLogModal = dynamic(() => import("./app/AuditLogModal"), { ssr: false });
 
 import {
   supabase,
