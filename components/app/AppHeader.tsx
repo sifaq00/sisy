@@ -27,11 +27,13 @@ export default function AppHeader({
       <div className="max-w-[1400px] w-full mx-auto px-6 py-3 flex items-center justify-between gap-4">
         <div className="flex items-center gap-8">
           <Link href="/" className="s-logo text-[22px] font-serif font-bold tracking-tight text-[#211F1A] flex items-center gap-2.5 group">
-            <img
-              src="/logo.png"
-              alt="sisy"
-              className="w-[32px] h-[32px] border border-[#C9662A] object-cover shrink-0 rounded-none shadow-2xs group-hover:scale-105 transition-transform"
-            />
+            <div className="w-8 h-8 rounded-xl overflow-hidden border border-[#E2D9C6] bg-[#FFFDF7] shadow-xs group-hover:border-[#C9662A]/60 group-hover:shadow-sm group-hover:scale-105 transition-all shrink-0">
+              <img
+                src="/logo.png"
+                alt="sisy"
+                className="w-full h-full object-cover"
+              />
+            </div>
             <span>
               sisy<span className="s-logo-dot text-[#C9662A] text-xs">●</span>
             </span>

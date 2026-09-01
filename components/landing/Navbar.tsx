@@ -39,11 +39,13 @@ export default function Navbar({ scrolled, minimal = false }: NavbarProps) {
 
           {/* Logo */}
           <Link href="/" className="s-logo flex items-center gap-2.5 group">
-            <img
-              src="/logo.png"
-              alt="sisy"
-              className="w-[32px] h-[32px] md:w-[36px] md:h-[36px] border border-[#C9662A] object-cover shrink-0 rounded-none shadow-2xs group-hover:scale-105 transition-transform"
-            />
+            <div className="w-8 h-8 md:w-9 md:h-9 rounded-xl overflow-hidden border border-[#E2D9C6] bg-[#FFFDF7] shadow-xs group-hover:border-[#C9662A]/60 group-hover:shadow-sm group-hover:scale-105 transition-all shrink-0">
+              <img
+                src="/logo.png"
+                alt="sisy"
+                className="w-full h-full object-cover"
+              />
+            </div>
             <span>
               sisy<span className="s-logo-dot">●</span>
             </span>
