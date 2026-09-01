@@ -6,9 +6,11 @@ export default function Footer() {
       <div className="s-container">
         <div className="s-footer-inner">
           <span className="s-logo flex items-center gap-2" style={{ fontSize: 16 }}>
-            <div className="w-5 h-5 rounded-full overflow-hidden border border-[#E2D9C6] bg-white shadow-2xs shrink-0 inline-block">
-              <img src="/logo.png" alt="sisy" className="w-full h-full object-cover" />
-            </div>
+            <img
+              src="/logo.png"
+              alt="sisy"
+              className="w-[22px] h-[22px] border border-[#C9662A] object-cover shrink-0 rounded-none shadow-2xs inline-block"
+            />
             <span>
               sisy<span className="s-logo-dot">●</span>
             </span>
