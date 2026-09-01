@@ -38,8 +38,13 @@ export default function Navbar({ scrolled, minimal = false }: NavbarProps) {
           )}
 
           {/* Logo */}
-          <Link href="/" className="s-logo">
-            sisy<span className="s-logo-dot">●</span>
+          <Link href="/" className="s-logo flex items-center gap-2 group">
+            <div className="w-7 h-7 rounded-full overflow-hidden border border-[#E2D9C6] bg-white shadow-2xs shrink-0 group-hover:scale-105 transition-transform">
+              <img src="/logo.png" alt="sisy" className="w-full h-full object-cover" />
+            </div>
+            <span>
+              sisy<span className="s-logo-dot">●</span>
+            </span>
           </Link>
 
           {/* Right Action */}

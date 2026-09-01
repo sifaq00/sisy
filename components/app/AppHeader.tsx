@@ -26,8 +26,13 @@ export default function AppHeader({
     <header className="border-b border-[#E2D9C6] bg-[#F5F0E4]/90 backdrop-blur-md sticky top-0 z-30">
       <div className="max-w-[1400px] w-full mx-auto px-6 py-3 flex items-center justify-between gap-4">
         <div className="flex items-center gap-8">
-          <Link href="/" className="s-logo text-[22px] font-serif font-bold tracking-tight text-[#211F1A] flex items-center">
-            sisy<span className="s-logo-dot text-[#C9662A] text-xs">●</span>
+          <Link href="/" className="s-logo text-[22px] font-serif font-bold tracking-tight text-[#211F1A] flex items-center gap-2 group">
+            <div className="w-7 h-7 rounded-full overflow-hidden border border-[#E2D9C6] bg-white shadow-2xs shrink-0 group-hover:scale-105 transition-transform">
+              <img src="/logo.png" alt="sisy" className="w-full h-full object-cover" />
+            </div>
+            <span>
+              sisy<span className="s-logo-dot text-[#C9662A] text-xs">●</span>
+            </span>
           </Link>
 
           {/* Tab Switcher */}
