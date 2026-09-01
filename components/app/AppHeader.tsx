@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ListTodo, BarChart3, Clock, Search, Plus, Terminal } from "lucide-react";
+import WalletButton from "./WalletButton";
 
 interface AppHeaderProps {
   tab: "tasks" | "gantt" | "time";
@@ -127,6 +128,9 @@ export default function AppHeader({
             <Plus className="w-3.5 h-3.5" />
             <span>New Task</span>
           </button>
+
+          {/* Connected Wallet Button & Account Popover */}
+          <WalletButton />
         </div>
       </div>
     </header>

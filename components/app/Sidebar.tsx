@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { SlidersHorizontal, Tag, Flame, Circle, Command } from "lucide-react";
 import { Task } from "@/lib/types";
+import { useWallet } from "@/context/WalletContext";
 
 interface SidebarProps {
   tasks: Task[];
@@ -23,9 +24,33 @@ export default function Sidebar({
   setFilterTag,
   allTags,
 }: SidebarProps) {
+  const { connected, address, shortAddress, walletName, walletIcon } = useWallet();
+
   return (
     <aside className="w-64 bg-[#FFFDF7] border border-[#E2D9C6] rounded-2xl p-4 hidden md:flex flex-col shrink-0 shadow-sm sticky top-6 self-start">
-      <div className="space-y-6 flex-1">
+      <div className="space-y-5 flex-1">
+        {/* Wallet Identity Greeting */}
+        {connected && (
+          <div className="bg-[#EFE8D8]/60 border border-[#E2D9C6] rounded-xl p-2.5 flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-white border border-[#E2D9C6] p-1 flex items-center justify-center shrink-0">
+              <img
+                src={walletIcon}
+                alt={walletName}
+                onError={(e) => {
+                  e.currentTarget.src = "/wallets/phantom.svg";
+                }}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[9px] text-[#8C867A] font-mono leading-none">Workspace Owner</div>
+              <div className="text-xs font-mono font-bold text-[#211F1A] truncate mt-0.5" title={address}>
+                {shortAddress}
+              </div>
+            </div>
+          </div>
+        )}
+
         <div>
           <div className="text-[10px] font-mono text-[#8C867A] tracking-wider uppercase mb-2.5 flex items-center gap-1.5 font-semibold">
             <SlidersHorizontal className="w-3 h-3" />

@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import { WalletProvider } from "@/context/WalletContext";
+import WalletModal from "@/components/app/WalletModal";
 
 export const metadata: Metadata = {
-  title: "sisy — The endless mountain of work, mastered.",
+  title: "sisy — The endless mountain of work, organized.",
   description:
-    "A single-user personal task & schedule optimizer web client for Motion with DAG dependency resolution and live time tracking.",
-  keywords: ["task manager", "motion", "schedule optimizer", "gantt", "time tracking"],
+    "A modern task & schedule optimizer with Solana Web3 wallet login, DAG dependency resolution, and realtime multi-device sync.",
+  keywords: ["task manager", "motion", "solana", "web3 wallet", "schedule optimizer", "gantt", "time tracking"],
   openGraph: {
-    title: "sisy — The endless mountain of work, mastered.",
-    description: "Personal task & schedule optimizer web client for Motion.",
+    title: "sisy — The endless mountain of work, organized.",
+    description: "Personal task & schedule optimizer with Solana wallet login and realtime sync.",
     url: "https://sisy.app",
     siteName: "Sisy",
     images: [
@@ -25,8 +27,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "sisy — The endless mountain of work, mastered.",
-    description: "Personal task & schedule optimizer web client for Motion.",
+    title: "sisy — The endless mountain of work, organized.",
+    description: "Personal task & schedule optimizer with Solana wallet login and realtime sync.",
   },
   icons: {
     icon: "/icon.svg",
@@ -49,8 +51,11 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-[#F5F0E4] text-[#211F1A] antialiased" suppressHydrationWarning>
-        <SmoothScroll />
-        {children}
+        <WalletProvider>
+          <SmoothScroll />
+          {children}
+          <WalletModal />
+        </WalletProvider>
       </body>
     </html>
   );

@@ -16,6 +16,8 @@ import TaskDetailDrawer from "./app/TaskDetailDrawer";
 import NewTaskModal from "./app/NewTaskModal";
 import CommandPalette from "./app/CommandPalette";
 import AuditLogModal, { AuditItem } from "./app/AuditLogModal";
+import WalletGatekeeper from "./app/WalletGatekeeper";
+import { useWallet } from "@/context/WalletContext";
 
 import {
   supabase,
@@ -36,6 +38,7 @@ interface SisyAppDashboardProps {
 
 export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashboardProps) {
   const router = useRouter();
+  const { connected: walletConnected, address: walletAddress } = useWallet();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(false);
   const [connected, setConnected] = useState(true);
@@ -202,7 +205,7 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
       supabase.removeChannel(channel);
       if (bc) bc.close();
     };
-  }, []);
+  }, [walletConnected, walletAddress]);
 
   // Global Keyboard Shortcuts (⌘K, Esc)
   useEffect(() => {
@@ -438,6 +441,10 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
     const d = currentDate || new Date();
     return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }).toUpperCase();
   }, [currentDate]);
+
+  if (!walletConnected) {
+    return <WalletGatekeeper />;
+  }
 
   return (
     <div className="min-h-screen bg-[#F5F0E4] text-[#211F1A] flex flex-col font-sans selection:bg-[#C9662A]/20 pb-12">
