@@ -26,16 +26,16 @@ export default function AppHeader({
     <header className="border-b border-[#E2D9C6] bg-[#F5F0E4]/90 backdrop-blur-md sticky top-0 z-30">
       <div className="max-w-[1400px] w-full mx-auto px-6 py-3 flex items-center justify-between gap-4">
         <div className="flex items-center gap-8">
-          <Link href="/" className="s-logo text-[22px] font-serif font-bold tracking-tight text-[#211F1A] flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-xl overflow-hidden border border-[#E2D9C6] bg-[#FFFDF7] shadow-xs group-hover:border-[#C9662A]/60 group-hover:shadow-sm group-hover:scale-105 transition-all shrink-0">
+          <Link href="/" className="s-logo flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-2xl overflow-hidden border border-[#E2D9C6] bg-[#FFFDF7] shadow-xs group-hover:border-[#C9662A]/60 group-hover:shadow-md group-hover:scale-105 transition-all shrink-0">
               <img
                 src="/logo.png"
                 alt="sisy"
                 className="w-full h-full object-cover"
               />
             </div>
-            <span>
-              sisy<span className="s-logo-dot text-[#C9662A] text-xs">●</span>
+            <span className="text-[26px] font-serif font-bold tracking-tight text-[#211F1A]">
+              sisy<span className="s-logo-dot text-[#C9662A] text-sm ml-0.5">●</span>
             </span>
           </Link>
 

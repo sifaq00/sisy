@@ -38,16 +38,16 @@ export default function Navbar({ scrolled, minimal = false }: NavbarProps) {
           )}
 
           {/* Logo */}
-          <Link href="/" className="s-logo flex items-center gap-2.5 group">
-            <div className="w-8 h-8 md:w-9 md:h-9 rounded-xl overflow-hidden border border-[#E2D9C6] bg-[#FFFDF7] shadow-xs group-hover:border-[#C9662A]/60 group-hover:shadow-sm group-hover:scale-105 transition-all shrink-0">
+          <Link href="/" className="s-logo flex items-center gap-3 group">
+            <div className="w-10 h-10 md:w-11 md:h-11 rounded-2xl overflow-hidden border border-[#E2D9C6] bg-[#FFFDF7] shadow-xs group-hover:border-[#C9662A]/60 group-hover:shadow-md group-hover:scale-105 transition-all shrink-0">
               <img
                 src="/logo.png"
                 alt="sisy"
                 className="w-full h-full object-cover"
               />
             </div>
-            <span>
-              sisy<span className="s-logo-dot">●</span>
+            <span className="text-2xl md:text-[28px] font-serif font-bold tracking-tight text-[#211F1A]">
+              sisy<span className="s-logo-dot text-[#C9662A] text-sm ml-0.5">●</span>
             </span>
           </Link>
 
