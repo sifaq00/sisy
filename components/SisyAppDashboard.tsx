@@ -268,9 +268,15 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
 
   const handleStartTimer = (task: Task) => {
     if (activeTimerTaskId === task.id) {
+      // Pause / Stop Timer
       const addedHours = timerSeconds / 3600;
-      const newDuration = (task.actual_duration_hours || 0) + addedHours;
-      const updatedTask = { ...task, actual_duration_hours: Number(newDuration.toFixed(2)) };
+      const newDuration = Math.max(0.001, (task.actual_duration_hours || 0) + addedHours);
+      const nextStatus: TaskStatus = task.status === "COMPLETED" ? "COMPLETED" : "TODO";
+      const updatedTask: Task = {
+        ...task,
+        status: nextStatus,
+        actual_duration_hours: Number(newDuration.toFixed(4)),
+      };
 
       setTasks((prev) => {
         const next = prev.map((t) => (t.id === task.id ? updatedTask : t));
@@ -279,18 +285,30 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
       });
 
       broadcastSync("TASKS_UPDATED", null);
-      updateTask(task.id, { actual_duration_hours: Number(newDuration.toFixed(2)) });
+      updateTask(task.id, {
+        status: nextStatus,
+        actual_duration_hours: Number(newDuration.toFixed(4)),
+      });
       setActiveTimerTaskId(null);
+
+      const loggedSec = timerSeconds;
+      setTimerSeconds(0);
+      const logStr = loggedSec >= 60 ? `${Math.round(loggedSec / 60)}m` : `${loggedSec}s`;
+
       addAuditLog(
-        `timer stopped · ${Math.round(timerSeconds / 60)}m logged on SY-${String(task.id).padStart(4, "0")}`,
+        `timer paused · ${logStr} logged on SY-${String(task.id).padStart(4, "0")}`,
         "#6E685C"
       );
-      setTimerSeconds(0);
-      showToast(`Timer stopped: +${Math.round(timerSeconds / 60)}m logged`);
+      showToast(`Timer paused: +${logStr} logged`);
     } else {
+      // Start Timer
       setActiveTimerTaskId(task.id);
       setTimerSeconds(0);
-      const updatedTask = { ...task, status: "IN_PROGRESS" as TaskStatus, actual_start: new Date().toISOString() };
+      const updatedTask: Task = {
+        ...task,
+        status: "IN_PROGRESS" as TaskStatus,
+        actual_start: task.actual_start || new Date().toISOString(),
+      };
       
       setTasks((prev) => {
         const next = prev.map((t) => (t.id === task.id ? updatedTask : t));
@@ -299,7 +317,10 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
       });
 
       broadcastSync("TASKS_UPDATED", null);
-      updateTask(task.id, { status: "IN_PROGRESS", actual_start: new Date().toISOString() });
+      updateTask(task.id, {
+        status: "IN_PROGRESS",
+        actual_start: updatedTask.actual_start,
+      });
       addAuditLog(`timer started on SY-${String(task.id).padStart(4, "0")}`, "#C9662A");
       showToast(`Timer active on SY-${String(task.id).padStart(4, "0")}`);
     }
@@ -512,6 +533,7 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
             scheduledBlocks={scheduledBlocks}
             tasks={tasks}
             setSelectedTaskId={setSelectedTaskId}
+            activeTimerTaskId={activeTimerTaskId}
           />
 
           {/* Tab Views */}
@@ -527,6 +549,7 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
                   handleStartTimer={handleStartTimer}
                   handleDeleteTask={handleDeleteTask}
                   activeTimerTaskId={activeTimerTaskId}
+                  timerSeconds={timerSeconds}
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
                   onOpenAddModal={() => setIsAddModalOpen(true)}
@@ -559,6 +582,7 @@ export default function SisyAppDashboard({ initialTab = "tasks" }: SisyAppDashbo
           handleStartTimer={handleStartTimer}
           handleDeleteTask={handleDeleteTask}
           activeTimerTaskId={activeTimerTaskId}
+          timerSeconds={timerSeconds}
         />
       </div>
 

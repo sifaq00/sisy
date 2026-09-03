@@ -14,16 +14,19 @@ interface ScheduleStripProps {
   scheduledBlocks: ScheduledBlock[];
   tasks: Task[];
   setSelectedTaskId: (id: number) => void;
+  activeTimerTaskId?: number | null;
 }
 
 const formatDuration = (hours?: number) => {
   if (!hours || hours <= 0) return "—";
-  const totalMin = Math.round(hours * 60);
-  const h = Math.floor(totalMin / 60);
-  const m = totalMin % 60;
+  const totalSeconds = Math.round(hours * 3600);
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
   if (h > 0 && m > 0) return `${h}h ${m}m`;
   if (h > 0) return `${h}h`;
-  return `${m}m`;
+  if (m > 0) return `${m}m`;
+  return `${s}s`;
 };
 
 export default function ScheduleStrip({
@@ -36,6 +39,7 @@ export default function ScheduleStrip({
   scheduledBlocks,
   tasks,
   setSelectedTaskId,
+  activeTimerTaskId,
 }: ScheduleStripProps) {
   return (
     <section className="bg-[#FFFDF7] border border-[#E2D9C6] rounded-2xl p-5 shadow-sm">
@@ -120,7 +124,8 @@ export default function ScheduleStrip({
               if (!block || !block.taskId) return null;
               const fullTask = tasks.find((t) => t && t.id === block.taskId);
               const isCompleted = fullTask?.status === "COMPLETED" || block.status === "COMPLETED";
-              const isInProgress = fullTask?.status === "IN_PROGRESS" || block.status === "IN_PROGRESS";
+              const isTimerRunning = activeTimerTaskId === block.taskId;
+              const isInProgress = isTimerRunning || fullTask?.status === "IN_PROGRESS" || block.status === "IN_PROGRESS";
 
               const leftPct = Math.max(0, Math.min(100, ((block.startHour - 8) / 11) * 100));
               const widthPct = Math.max(4, Math.min(100 - leftPct, (block.durationHours / 11) * 100));
@@ -157,6 +162,10 @@ export default function ScheduleStrip({
                     {isCompleted ? (
                       <span className="flex items-center gap-0.5">
                         <CheckCircle className="w-2.5 h-2.5" /> Done
+                      </span>
+                    ) : isTimerRunning ? (
+                      <span className="flex items-center gap-1 font-bold animate-pulse text-white">
+                        <span className="w-1.5 h-1.5 rounded-full bg-white" /> Running
                       </span>
                     ) : isInProgress ? (
                       <span className="flex items-center gap-0.5">

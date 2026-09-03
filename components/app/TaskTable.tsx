@@ -25,6 +25,7 @@ interface TaskTableProps {
   handleStartTimer: (task: Task) => void;
   handleDeleteTask: (id: number) => void;
   activeTimerTaskId: number | null;
+  timerSeconds?: number;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   onOpenAddModal: () => void;
@@ -32,12 +33,26 @@ interface TaskTableProps {
 
 const formatDuration = (hours?: number) => {
   if (!hours || hours <= 0) return "—";
-  const totalMin = Math.round(hours * 60);
-  const h = Math.floor(totalMin / 60);
-  const m = totalMin % 60;
+  const totalSeconds = Math.round(hours * 3600);
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
   if (h > 0 && m > 0) return `${h}h ${m}m`;
   if (h > 0) return `${h}h`;
-  return `${m}m`;
+  if (m > 0) return `${m}m`;
+  return `${s}s`;
+};
+
+const formatLiveActual = (hours?: number, isActive = false, timerSeconds = 0) => {
+  const baseSeconds = Math.round((hours || 0) * 3600);
+  const totalSeconds = isActive ? baseSeconds + timerSeconds : baseSeconds;
+  if (totalSeconds <= 0) return isActive ? "0s" : "—";
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  if (h > 0) return `${h}h ${String(m).padStart(2, "0")}m ${String(s).padStart(2, "0")}s`;
+  if (m > 0) return `${m}m ${String(s).padStart(2, "0")}s`;
+  return `${s}s`;
 };
 
 export default function TaskTable({
@@ -49,6 +64,7 @@ export default function TaskTable({
   handleStartTimer,
   handleDeleteTask,
   activeTimerTaskId,
+  timerSeconds = 0,
   searchQuery,
   setSearchQuery,
   onOpenAddModal,
@@ -210,8 +226,17 @@ export default function TaskTable({
                                 : "bg-[#8C867A]/15 text-[#57534A]"
                             }`}
                           >
-                            <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                            <span
+                              className={`w-1.5 h-1.5 rounded-full bg-current ${
+                                activeTimerTaskId === task.id ? "animate-pulse" : ""
+                              }`}
+                            />
                             {task.status}
+                            {activeTimerTaskId === task.id && (
+                              <span className="text-[9px] font-bold text-[#C9662A] ml-0.5">
+                                ({Math.floor(timerSeconds / 60)}:{String(timerSeconds % 60).padStart(2, "0")})
+                              </span>
+                            )}
                           </span>
                         </td>
 
@@ -220,8 +245,23 @@ export default function TaskTable({
                         </td>
 
                         <td className="py-3 px-2 font-mono">
-                          <span className={isOver ? "text-[#B83A2E] font-bold" : "text-[#57534A]"}>
-                            {formatDuration(task.actual_duration_hours)}
+                          <span
+                            className={
+                              activeTimerTaskId === task.id
+                                ? "text-[#C9662A] font-bold inline-flex items-center gap-1.5"
+                                : isOver
+                                ? "text-[#B83A2E] font-bold"
+                                : "text-[#57534A]"
+                            }
+                          >
+                            {activeTimerTaskId === task.id && (
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#C9662A] animate-ping" />
+                            )}
+                            {formatLiveActual(
+                              task.actual_duration_hours,
+                              activeTimerTaskId === task.id,
+                              timerSeconds
+                            )}
                           </span>
                         </td>
 
@@ -238,7 +278,7 @@ export default function TaskTable({
                                   ? "bg-[#C9662A] text-white shadow-md ring-2 ring-[#C9662A]/30 animate-pulse"
                                   : "bg-[#EFE8D8]/70 border border-[#E2D9C6] text-[#57534A] hover:bg-[#C9662A] hover:text-white hover:border-[#C9662A]"
                               }`}
-                              title={activeTimerTaskId === task.id ? "Stop active timer" : "Start timer on this task"}
+                              title={activeTimerTaskId === task.id ? "Pause timer" : "Start timer on this task"}
                             >
                               {activeTimerTaskId === task.id ? (
                                 <Square className="w-2.5 h-2.5 fill-current rounded-xs" />

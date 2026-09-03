@@ -16,6 +16,7 @@ interface TaskDetailDrawerProps {
   handleStartTimer: (task: Task) => void;
   handleDeleteTask: (id: number) => void;
   activeTimerTaskId: number | null;
+  timerSeconds?: number;
 }
 
 export default function TaskDetailDrawer({
@@ -28,6 +29,7 @@ export default function TaskDetailDrawer({
   handleStartTimer,
   handleDeleteTask,
   activeTimerTaskId,
+  timerSeconds = 0,
 }: TaskDetailDrawerProps) {
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -292,7 +294,10 @@ export default function TaskDetailDrawer({
               {activeTimerTaskId === selectedTask.id ? (
                 <>
                   <Square className="w-3.5 h-3.5 fill-current" />
-                  <span>Stop active timer</span>
+                  <span>
+                    Pause timer ({Math.floor(timerSeconds / 60)}:
+                    {String(timerSeconds % 60).padStart(2, "0")})
+                  </span>
                 </>
               ) : (
                 <>
